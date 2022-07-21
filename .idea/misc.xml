@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6 (analysis)" project-jdk-type="Python SDK" />
   <component name="UnattendedHostPersistenceState">
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="328" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/strophySub" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="119" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/analysisSub" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1381" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/save_np_binary.py" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="4255" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/enstrophy.py" />
+          <option name="caretOffset" value="202" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/alpha_max.py" />
         </OpenedFileInfo>
       </list>
     </option>

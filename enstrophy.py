@@ -1,53 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from array import array
 import os
-from tokenize import Double
 import numpy as np
+from get_vort import vorticity_mag
+from inout import extract_zet
 
 import seaborn as sns
 from matplotlib import pyplot as plt
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-import matplotlib.colors as colors
 
 plt.style.use(["science", "grid"])
 
 from lotusvis.assign_props import AssignProps
 from os.path import exists
-from tqdm import tqdm
-
-
-def vorticity_x(flow):
-    dv_dz = np.gradient(flow.V, axis=2, edge_order=2)
-    dw_dy = np.gradient(flow.W, axis=1, edge_order=2)
-    return dw_dy - dv_dz
-
-
-def vorticity_y(flow):
-    du_dz = np.gradient(flow.U, axis=2, edge_order=2)
-    dw_dx = np.gradient(flow.W, axis=0, edge_order=2)
-    return du_dz - dw_dx
-
-
-def vorticity_z(flow):
-    dv_dx = np.gradient(flow.V, axis=1, edge_order=2)
-    du_dy = np.gradient(flow.U, axis=0, edge_order=2)
-    return dv_dx - du_dy
-
-
-def vorticity_mag(flow) -> array:
-    try:
-        mag = np.sqrt(vorticity_x(flow) ** 2 + vorticity_y(flow) ** 2 + vorticity_z(flow) ** 2)
-    except ValueError:
-        mag = np.sqrt(vorticity_z(flow) ** 2)
-    return mag
-
-
-def extract_zet(fp):
-    with open(fp, "r") as fileSource:
-        fileLines = fileSource.readlines()
-    txt = fileLines[24]
-    return float([s for s in txt.split(' ')][-2][:-1])
 
 
 def plot_enstrophy():
@@ -129,9 +93,6 @@ if __name__ == '__main__':
     cwd = os.getcwd()
     cases = np.array([52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0])
     cs = np.array([1040, 1056, 1012, 1040, 1044, 1024, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
-
-    # cases = np.array([52, 48, 44, 40, 36, 28, 24, 20, 16, 12, 8, 4, 0])
-    # cs = np.array([1040, 1056, 1012, 1040, 1044, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
 
     plot_enstrophy()
 
