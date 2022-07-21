@@ -14,13 +14,11 @@ from lotusvis.assign_props import AssignProps
 from os.path import exists
 
 
-def plot_enstrophy():
+def plot_e_scale():
     fig, ax = plt.subplots(figsize=(5, 3))
 
     ax.set_ylabel(r'$ E $')
     ax.set_xlabel(r"$ \zeta/U $")
-
-    total_int_r, total_int_s, zetas = get_enstrophy()
 
     mean_r, max_r, min_r = np.mean(total_int_r, axis=0), np.max(total_int_r, axis=0), np.min(total_int_r, axis=0)
     mean_s, max_s, min_s = np.mean(total_int_s, axis=0), np.max(total_int_s, axis=0), np.min(total_int_s, axis=0)
@@ -33,6 +31,9 @@ def plot_enstrophy():
     ax.fill_between(zetas, max_s, min_s, color=colours_s[2], alpha=0.5, linewidth=0)
     ax.plot(zetas, mean_s, marker="s", color=colours_s[0], ls='-.', label='Kinematic eq. smooth')
 
+    print(np.array([zetas, mean_s, mean_r]))
+    np.save(f"{cwd}/enstrophy", np.array([zetas, mean_s, mean_r]))
+
     ax.legend()
     plt.savefig(
         f"{cwd}/figures/enstrophy.pdf", dpi=200, transparent=True
@@ -40,39 +41,27 @@ def plot_enstrophy():
     plt.close()
 
 
-def pre_check() -> None:
+def scaling_test():
+    zetas, mean_s, mean_r = np.load(f"{cwd}/enstrophy.npy")
+    return mean_s, mean_r
+
+
+def _get_vort_max():
     for idx, case in enumerate(cases):
-        if not exists(f"{cwd}/{str(case)}x{str(case)}/{str(cs[idx])}/phase_average.npy"):
-            print(f"Nothing in {cwd}/{str(case)}x{str(case)}/{str(cs[idx])}/phase_average.npy")
-            # raise FileNotFoundError
-        if not exists(f"{cwd}/{str(case)}x{str(case)}/2D/phase_average.npy"):
-            print(f"Nothing in {cwd}/{str(case)}x{str(case)}/2D/phase_average.npy")
+        phase_average_2d = np.load(f"{cwd}/{str(case)}x{str(case)}/2D/phase_average.npy")
+        temp = []
+        for ident, snap in enumerate(phase_average_2d):
+            flow = AssignProps(snap)
+            vort_max = vorticity_mag(flow)
+            print(np.shape(vort_max))
+            x_pos = np.mean(flow.X[np.where((flow.X>0.25)&(flow.X<0.26))])
+            print(np.shape(x_pos))
 
 
-def get_enstrophy():
-    zetas = [1 / extract_zet(f"{cwd}/{str(case)}x{str(case)}/{str(cs[idx])}/lotus.f90") for idx, case in
-             enumerate(cases)]
-    total_int_r, total_int_s = [], []
-    pre_check()
-    for idx, case in enumerate(cases):
-        phase_average_r = np.load(f"{cwd}/{str(case)}x{str(case)}/{str(cs[idx])}/phase_average.npy")
-        phase_average_s = np.load(f"{cwd}/{str(case)}x{str(case)}/2D/phase_average.npy")
+            x_pos = np.mean(flow.X[np.where(np.max(vort_max))])
+            temp.append(x_pos)
 
-        temp_r, temp_s = [], []
-        for snap_r, snap_s in zip(phase_average_r, phase_average_s):
-            enstrophy_r = enstrophy(snap_r)
-            enstrophy_s = enstrophy(snap_s)
-
-            temp_r.append(enstrophy_r)
-            temp_s.append(enstrophy_s)
-
-        total_int_r.append(temp_r)
-        total_int_s.append(temp_s)
-        del phase_average_r, phase_average_s
-    total_int_r, total_int_s = np.array(total_int_r), np.array(total_int_s)
-    total_int_r, total_int_s = total_int_r.T, total_int_s.T
-    np.save(f"{cwd}/enstrophy", np.array([zetas, np.mean(total_int_s, axis=0), np.mean(total_int_r, axis=0)]))
-    return total_int_r, total_int_s, zetas
+    return temp
 
 
 def enstrophy(snap: np.array) -> np.array:
@@ -92,5 +81,5 @@ if __name__ == '__main__':
     cases = np.array([52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0])
     cs = np.array([1040, 1056, 1012, 1040, 1044, 1024, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
 
-    plot_enstrophy()
-
+    # plot_enstrophy()
+    _get_vort_max()

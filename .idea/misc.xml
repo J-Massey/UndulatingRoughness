@@ -6,7 +6,31 @@
       <list>
         <OpenedFileInfo>
           <option name="caretOffset" value="202" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/alpha_max.py" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/kinematic_shapes.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="5125" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/vortex_speed.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1859" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/enstrophy_scaling.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="727" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/get_vort.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1171" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/enstrophy.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1308" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/inout.py" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="2955" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/forces.py" />
         </OpenedFileInfo>
       </list>
     </option>
