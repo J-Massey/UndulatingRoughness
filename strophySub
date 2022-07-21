@@ -2,7 +2,7 @@
 
 #SBATCH --ntasks=40
 #SBATCH --nodes=1
-#SBATCH --mem=140G
+# SBATCH --mem=180G
 #SBATCH --partition=batch
 #SBATCH --job-name=enstrophy
 #SBATCH --time=00:40:00

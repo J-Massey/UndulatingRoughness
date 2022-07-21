@@ -42,6 +42,6 @@ if __name__ == "__main__":
     cwd = os.getcwd()
     cases = ['32x32', '20x20', '16x16', '12x12']
     cs = np.array([1024, 1020, 1024, 1008])
-    cases = ['16x16']
+    cases = ['32x32']
     cs = np.array([1024])
     main()

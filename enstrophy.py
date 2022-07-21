@@ -69,6 +69,9 @@ def plot_enstrophy():
     ax.fill_between(zetas, max_s, min_s, color=colours_s[2], alpha=0.5, linewidth=0)
     ax.plot(zetas, mean_s, marker="s", color=colours_s[0], ls='-.', label='Kinematic eq. smooth')
 
+    print(np.array([zetas, mean_s, mean_r]))
+    np.save(f"{cwd}/enstrophy", np.array([zetas, mean_s, mean_r]))
+
     ax.legend()
     plt.savefig(
         f"{cwd}/figures/enstrophy.pdf", dpi=200, transparent=True
@@ -107,7 +110,6 @@ def get_enstrophy():
         del phase_average_r, phase_average_s
     total_int_r, total_int_s = np.array(total_int_r), np.array(total_int_s)
     total_int_r, total_int_s = total_int_r.T, total_int_s.T
-    print('f\n', total_int_r, total_int_s, zetas)
     return total_int_r, total_int_s, zetas
 
 
@@ -123,59 +125,13 @@ def enstrophy(snap: np.array) -> np.array:
     return scaled_enstrophy
 
 
-def plot_enstrophy_diff():
-    fig, ax = plt.subplots(figsize=(7, 3))
-
-    ax.set_ylabel(r'$ (E_r - E_s)/E_s $')
-    ax.set_xlabel(r"$ L/\lambda $")
-    colours = sns.color_palette('Reds', 10)
-    total_int_r, total_int_s = [], []
-
-    # Find the volume a box of c, c, z takes up to normalise the enstrophy
-    for idx, case in enumerate(cases):
-
-        phase_average = np.load(f"{cwd}/{str(case)}x{str(case)}/{str(cs[idx])}/phase_average.npy")
-        phase_average_2d = np.load(f"{cwd}/{str(case)}x{str(case)}/2D/phase_average.npy")
-        cell_volume = 4 / cs[idx] * 2 / cs[idx] * 4 / cs[idx]
-
-        temp = []
-        for ident, (snap, snap_2d) in enumerate(zip(phase_average, phase_average_2d)):
-            flow = AssignProps(snap)
-            flow_2d = AssignProps(snap_2d)
-
-            enst = enstrophy(cell_volume, flow)
-            enst_2d = enstrophy(cell_volume, flow_2d)
-            enst_diff = (enst - enst_2d) / enst_2d
-
-            temp.append(enst_diff)
-            del flow, flow_2d
-
-        total_int_r.append(temp)
-        del phase_average
-
-    total_int_r = np.array(total_int_r)
-    total_int_r = total_int_r.T
-
-    ax.plot(cases, np.mean(total_int_r, axis=0), marker="+", color=colours[2])
-
-    plt.savefig(
-        f"{cwd}/figures/enstrophy_diff.pdf", dpi=300, transparent=True
-    )
-    plt.close()
-
-
 if __name__ == '__main__':
-    global cwd
     cwd = os.getcwd()
     cases = np.array([52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4, 0])
     cs = np.array([1040, 1056, 1012, 1040, 1044, 1024, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
 
-    cases = np.array([52, 48, 44, 40, 36, 28, 24, 20, 16, 12, 8, 4, 0])
-    cs = np.array([1040, 1056, 1012, 1040, 1044, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
-    # cases = np.array([0, 4])
-    # cs = np.array([1024, 1024])
+    # cases = np.array([52, 48, 44, 40, 36, 28, 24, 20, 16, 12, 8, 4, 0])
+    # cs = np.array([1040, 1056, 1012, 1040, 1044, 1036, 1056, 1020, 1024, 1008, 1024, 1024, 1024])
 
     plot_enstrophy()
-    # plot_enstrophy_diff()
-    # pre_check()
-    # np.save(f"{cwd}/enstrophies", np.array(get_enstrophy()))
+

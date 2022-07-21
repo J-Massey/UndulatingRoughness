@@ -1,7 +1,7 @@
 Running SLURM prolog script on ruby045.cluster.local
 ===============================================================================
-Job started on Wed Jul 20 11:59:12 BST 2022
-Job ID          : 1617111
+Job started on Wed Jul 20 14:15:50 BST 2022
+Job ID          : 1617433
 Job name        : analysis
 WorkDir         : /ssdfs/users/jmom1n15/phase_shift
 Command         : /ssdfs/users/jmom1n15/phase_shift/analysis/analysisSub
@@ -12,35 +12,24 @@ Num of tasks    : 4
 Hosts allocated : ruby045
 Job Output Follows ...
 ===============================================================================
-Traceback (most recent call last):
-  File "./analysis/save_np_binary.py", line 48, in <module>
-    main()
-  File "./analysis/save_np_binary.py", line 40, in main
-    save_phase_avg_2d()
-  File "./analysis/save_np_binary.py", line 32, in save_phase_avg_2d
-    phase_av = Decompositions(f"{cwd}/{case}/2D", "fluid", length_scale=cs[idx]).phase_average(4)
-  File "/home/jmom1n15/.local/lib/python3.7/site-packages/lotusvis/decompositions.py", line 35, in phase_average
-    phase_average = np.zeros(self.init_phase_average_array(t))
-  File "/home/jmom1n15/.local/lib/python3.7/site-packages/lotusvis/decompositions.py", line 46, in init_phase_average_array
-    snapshot_shape = np.shape(io.read_vti(os.path.join(self.datp_dir, self.fns[0]), self.length_scale))
-IndexError: string index out of range
+16x16 has a np binary
 ==============================================================================
 Running epilogue script on ruby045.
 
-Submit time  : 2022-07-20T11:59:14
-Start time   : 2022-07-20T11:59:46
-End time     : 2022-07-20T11:59:48
-Elapsed time : 00:00:02 (Timelimit=02:00:00)
+Submit time  : 2022-07-20T14:15:34
+Start time   : 2022-07-20T14:16:24
+End time     : 2022-07-20T14:16:26
+Elapsed time : 00:00:02 (Timelimit=00:10:00)
 
-Job ID: 1617111
+Job ID: 1617433
 Cluster: i5
 User/Group: jmom1n15/mm
-State: FAILED (exit code 1)
+State: COMPLETED (exit code 0)
 Nodes: 1
 Cores per node: 4
 CPU Utilized: 00:00:01
 CPU Efficiency: 12.50% of 00:00:08 core-walltime
 Job Wall-clock time: 00:00:02
-Memory Utilized: 2.57 MB
+Memory Utilized: 2.34 MB
 Memory Efficiency: 0.02% of 14.06 GB
 
